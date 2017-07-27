@@ -16,7 +16,7 @@ J = (-1/m)*sum(y.*log(ghX)+(1-y).*log(1-ghX));
 % Defining the instantaneous rate of error for the given parameters
 grad = (1/m)*X'*(ghX-y);
 
-
+% -------------------------------------------------------------------------
 % Rregularizing all weigths of the error function & updating overall cost.
 J = J + (lambda/(2*m))*sum(theta(2:end).^2);
 
