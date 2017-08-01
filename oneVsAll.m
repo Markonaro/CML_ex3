@@ -8,13 +8,13 @@ function [all_theta] = oneVsAll(X, y, num_labels, lambda)
 %   to the classifier for label i
 
 % Some useful variables
-m = size(X, 1);
-n = size(X, 2);
+m = size(X, 1); % number of training examples
+n = size(X, 2); % number of features; X's second dimension/ # columns
 
 % You need to return the following variables correctly 
 all_theta = zeros(num_labels, n + 1);
 
-% Add ones to the X data matrix
+% Add ones to the X data matrix; bias parameters
 X = [ones(m, 1) X];
 
 % ====================== YOUR CODE HERE ======================
@@ -49,9 +49,12 @@ X = [ones(m, 1) X];
 %                 initial_theta, options);
 %
 
+% Rename num_labels to make more managable
+K = num_labels;
 
-
-
+for c = 1:K
+    
+end
 
 
 
