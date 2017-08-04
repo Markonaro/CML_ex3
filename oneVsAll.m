@@ -11,8 +11,11 @@ function [all_theta] = oneVsAll(X, y, num_labels, lambda)
 m = size(X, 1); % number of training examples
 n = size(X, 2); % number of features; X's second dimension/ # columns
 
+% Rename num_labels to make code more concise & consistent w/ lectures
+K = num_labels;
+
 % You need to return the following variables correctly 
-all_theta = zeros(num_labels, n + 1);
+all_theta = zeros(K, n + 1);
 
 % Add ones to the X data matrix; bias parameters
 X = [ones(m, 1) X];
@@ -22,7 +25,7 @@ X = [ones(m, 1) X];
 %               logistic regression classifiers with regularization
 %               parameter lambda. 
 %
-% Hint: theta(:) will return a column vector.
+% Hint: theta(:) will return a column vector. //"column vector" Redundent?
 %
 % Hint: You can use y == c to obtain a vector of 1's and 0's that tell you
 %       whether the ground truth is true/false for this class.
@@ -34,34 +37,21 @@ X = [ones(m, 1) X];
 %       fmincg works similarly to fminunc, but is more efficient when we
 %       are dealing with large number of parameters.
 %
-% Example Code for fmincg:
-%
-%     % Set Initial theta
-%     initial_theta = zeros(n + 1, 1);
-%     
-%     % Set options for fminunc
-%     options = optimset('GradObj', 'on', 'MaxIter', 50);
-% 
-%     % Run fmincg to obtain the optimal theta
-%     % This function will return theta and the cost 
-%     [theta] = ...
-%         fmincg (@(t)(lrCostFunction(t, X, (y == c), lambda)), ...
-%                 initial_theta, options);
-%
 
-% Rename num_labels to make more managable
-K = num_labels;
+% Set Initial theta
+initial_theta = zeros(n + 1, 1);
+
+% Set options for fminunc
+options = optimset('GradObj', 'on', 'MaxIter', 50);
 
 for c = 1:K
-    
+    % Run fmincg to obtain the optimal theta
+    % This function will return theta and the cost 
+    [theta] = ...
+        fmincg (@(t)(lrCostFunction(t, X, (y == c), lambda)), ...
+                initial_theta, options);    
+        all_theta(c, :) = theta';
 end
-
-
-
-
-
-
-
 
 % =========================================================================
 
