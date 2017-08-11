@@ -8,35 +8,20 @@ function [all_theta] = oneVsAll(X, y, num_labels, lambda)
 %   to the classifier for label i
 
 % Some useful variables
-m = size(X, 1); % number of training examples
-n = size(X, 2); % number of features; X's second dimension/ # columns
+m = size(X, 1); % number of training examples; # rows in X
+n = size(X, 2); % number of pixels; # columns in X
 
 % Rename num_labels to make code more concise & consistent w/ lectures
 K = num_labels;
 
 % You need to return the following variables correctly 
-all_theta = zeros(K, n + 1);
+all_theta = zeros(K, n + 1); % # of different classifications (0-9) by
+                             % # of pixels in each training example (20x20)
 
-% Add ones to the X data matrix; bias parameters
-X = [ones(m, 1) X];
+% Add ones to the X data matrix; i.e. add bias parameters
+X = [ones(m, 1), X];
 
-% ====================== YOUR CODE HERE ======================
-% Instructions: You should complete the following code to train num_labels
-%               logistic regression classifiers with regularization
-%               parameter lambda. 
-%
-% Hint: theta(:) will return a column vector. //"column vector" Redundent?
-%
-% Hint: You can use y == c to obtain a vector of 1's and 0's that tell you
-%       whether the ground truth is true/false for this class.
-%
-% Note: For this assignment, we recommend using fmincg to optimize the cost
-%       function. It is okay to use a for-loop (for c = 1:num_labels) to
-%       loop over the different classes.
-%
-%       fmincg works similarly to fminunc, but is more efficient when we
-%       are dealing with large number of parameters.
-%
+% =========================================================================
 
 % Set Initial theta
 initial_theta = zeros(n + 1, 1);
@@ -45,11 +30,12 @@ initial_theta = zeros(n + 1, 1);
 options = optimset('GradObj', 'on', 'MaxIter', 50);
 
 for c = 1:K
-    % Run fmincg to obtain the optimal theta
-    % This function will return theta and the cost 
-    [theta] = ...
+        [theta] = ...
         fmincg (@(t)(lrCostFunction(t, X, (y == c), lambda)), ...
-                initial_theta, options);    
+                initial_theta, options);
+        % Set each row in the all_theta matrix equal to a column vector
+        % of theta weights for that given example. y == c determines how
+        % many times an entry y is equal to the current classification c. 
         all_theta(c, :) = theta';
 end
 

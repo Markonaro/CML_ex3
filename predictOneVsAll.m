@@ -10,11 +10,13 @@ function p = predictOneVsAll(all_theta, X)
 
 m = size(X, 1);
 
-% You need to return the following variables correctly 
+% Return the following variable
 p = zeros(m);
 
 % Add ones to the X data matrix
 X = [ones(m, 1) X];
+
+% =========================================================================
 
 % Define ghX as the logistic regression of X when trained by all_Theta
 ghX = sigmoid(X*all_theta');
@@ -22,5 +24,6 @@ ghX = sigmoid(X*all_theta');
 % Return the maximum probability in p
 [~, p] = max(ghX, [], 2);
 
+% =========================================================================
 
 end

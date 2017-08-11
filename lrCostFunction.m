@@ -17,7 +17,8 @@ J = (-1/m)*sum(y.*log(ghX)+(1-y).*log(1-ghX));
 grad = (1/m)*X'*(ghX-y);
 
 % -------------------------------------------------------------------------
-% Rregularizing all weigths of the error function & updating overall cost.
+% Rregularizing all weigths of the error function [except theta(1)]
+% & updating overall cost. Bias parameter theta_0 does not get regularized.
 J = J + (lambda/(2*m))*sum(theta(2:end).^2);
 
 % Knowing we don't regularize the bias parameter for determining
